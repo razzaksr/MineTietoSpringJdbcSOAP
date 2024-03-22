@@ -1,0 +1,86 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://services.soap"
+    xmlns:tns="http://services.soap"
+    elementFormDefault="qualified">
+
+    <!-- POJO -->
+    <xsd:complexType name="bankers">
+        <xsd:sequence>
+            <xsd:element name="bankerId" type="xsd:int" />
+            <xsd:element name="bankerName" type="xsd:string"/>
+            <xsd:element name="bankerPasscode" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <!--ServiceStatus-->
+    <xsd:complexType name="serviceStatus">
+        <xsd:sequence>
+            <xsd:element name="status" type="xsd:string" />
+            <xsd:element name="message" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!--CRUDL-->
+    <!--Delete-->
+    <xsd:element name="deleteViaIdRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="id" type="xsd:int"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="deleteViaIdResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="serviceStatus" type="tns:serviceStatus"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <!--Read by id-->
+    <xsd:element name="getByIdRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="id" type="xsd:int"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="getByIdResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="banker" type="tns:bankers"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- List Soap API -->
+    <xsd:element name="listBankersRequest">
+        <xsd:complexType/>
+    </xsd:element>
+    <xsd:element name="listBankersResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="serviceStatus" type="tns:serviceStatus" />
+                <xsd:element name="bankers" type="tns:bankers" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!--Creating a new official request-->
+    <xsd:element name="newBankersRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="bankers" type="tns:bankers"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="newBankersResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="serviceStatus" type="tns:serviceStatus" />
+                <xsd:element name="bankers" type="tns:bankers" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+</xsd:schema>
