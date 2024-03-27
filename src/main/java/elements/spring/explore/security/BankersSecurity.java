@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BankersSecurity {
 
     @Autowired
-    UserNotRoleService service;
+    UserWithRoleService service;
+//    UserNotRoleService service;
 
     AuthenticationManager authenticationManager;
 
@@ -42,7 +45,10 @@ public class BankersSecurity {
 
         // with random generated password
 
-        httpSecurity.authorizeRequests().antMatchers("/users/sign").permitAll();
+//        httpSecurity.authorizeRequests().antMatchers("/users/sign").permitAll();
+//        httpSecurity.authorizeRequests().antMatchers("/bankerspoint/bankers.wsdl").permitAll();
+        httpSecurity.authorizeRequests().antMatchers("/role/sign").permitAll();
+//        httpSecurity.authorizeRequests().antMatchers("/bankerspoint/**").hasRole("admin");
         httpSecurity.authorizeRequests().anyRequest().authenticated();
         httpSecurity.httpBasic();
         httpSecurity.csrf().disable();

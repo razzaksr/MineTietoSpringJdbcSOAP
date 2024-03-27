@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -50,6 +51,7 @@ public class ServiceEndpoints {
         return response;
     }
 
+    @PreAuthorize("hasAnyAuthority('manager','viewer')")
     @PayloadRoot(namespace = url,localPart = "listBankersRequest")
     @ResponsePayload
     public ListBankersResponse listBankersResponse(@RequestPayload ListBankersRequest listOfficialRequest){
@@ -75,6 +77,7 @@ public class ServiceEndpoints {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PayloadRoot(namespace = url,localPart = "newBankersRequest")
     @ResponsePayload
     public NewBankersResponse newOfficialResponse(@RequestPayload NewBankersRequest newBankersRequest){
